@@ -643,6 +643,7 @@ class PHP_CodeSniffer
         foreach ($files as $file) {
             // Work out where the position of /StandardName/Sniffs/... is
             // so we can determine what the class will be called.
+            $file = str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, $file);
             $sniffPos = strrpos($file, DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR);
             if ($sniffPos === false) {
                 continue;
@@ -658,7 +659,6 @@ class PHP_CodeSniffer
             $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
 
             include_once $file;
-
             // If they have specified a list of sniffs to restrict to, check
             // to see if this sniff is allowed.
             $allowed = in_array(strtolower($className), $sniffs);
